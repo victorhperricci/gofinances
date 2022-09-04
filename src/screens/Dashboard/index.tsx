@@ -10,7 +10,8 @@ import {
     UserGreeting,
     UserName,
     UserWrapper,
-    IconPower
+    IconPower,
+    HighlightCards
 } from './style'
 
 export const Dashboard = () => {
@@ -32,7 +33,16 @@ export const Dashboard = () => {
 
             </Header>
 
-            <HighlightCard />
+
+            <HighlightCards 
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{ paddingHorizontal: 24 }}
+            >
+                <HighlightCard />
+                <HighlightCard />
+                <HighlightCard />
+            </HighlightCards>
         </Container>
     )
 }

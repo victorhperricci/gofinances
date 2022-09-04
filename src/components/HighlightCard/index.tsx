@@ -14,7 +14,7 @@ export const HighlightCard = () => {
         <Container>
             <Header>
                 <Title>Entrada</Title>
-                <Icon name="arrow-up-circle"  />
+                <Icon name="arrow-up-circle" />
             </Header>
 
             <Footer>

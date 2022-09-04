@@ -9,7 +9,7 @@ export const Container = styled.View`
     padding: 19px 23px;
     padding-bottom: ${19 + 23}px;
     margin-right: 16px;
-    
+    height: ${RFValue(200)}px;
 `
 
 export const Header = styled.View`
@@ -25,7 +25,6 @@ export const Title = styled.Text`
 
 export const Icon = styled(Feather)`
     font-size: ${RFValue(40)}px;
-
 `
 
 export const Footer = styled.View`
@@ -36,11 +35,11 @@ export const Amount = styled.Text`
     font-family: ${({ theme }) => theme.fonts.medium};
     font-size: ${RFValue(32)}px;
     margin-top: 38px;
+    color: ${({ theme }) => theme.colors.text_dark};
 `
 
 export const LastTransaction = styled.Text`
     font-family: ${({ theme }) => theme.fonts.regular};
     font-size: ${RFValue(12)}px;
     color: ${({ theme }) => theme.colors.text};
-
 `
