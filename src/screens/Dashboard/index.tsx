@@ -23,7 +23,7 @@ import {
     TransactionList
 } from './style'
 
-interface TransactionListProps extends ITransactionCardProps {
+export interface TransactionListProps extends ITransactionCardProps {
     id: string;
 }
 
@@ -92,7 +92,6 @@ export const Dashboard = () => {
 
                     <IconPower name="power" />
                 </UserWrapper>  
-
             </Header>
 
             <HighlightCards>
