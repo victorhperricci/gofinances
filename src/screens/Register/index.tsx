@@ -63,6 +63,7 @@ export const Register = () => {
                         <Input 
                             placeholder='Preço'
                             placeholderTextColor={'#969CB2'} 
+                            
                         />
                         
                         <TransactionTypes>

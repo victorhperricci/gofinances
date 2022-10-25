@@ -42,7 +42,6 @@ export const Category = styled(TouchableOpacity)<CategoryProps>`
     background-color: ${({ isActive, theme }) => 
         isActive ? theme.colors.secondary_light : theme.colors.background
     };
-    
 
 `
 
