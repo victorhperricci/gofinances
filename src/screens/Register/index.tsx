@@ -1,9 +1,13 @@
 import React, { useState } from 'react'
-import { TouchableWithoutFeedback, Modal } from 'react-native'
+import { TouchableWithoutFeedback, Modal, Alert } from 'react-native'
+import { useForm } from 'react-hook-form'
+import { Control, FieldValues, SubmitHandler } from 'react-hook-form/dist/types'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
 
 import { Button } from '../../components/Form/Button'
 import { CategorySelectButton } from '../../components/Form/CategorySelectButton'
-import { Input } from '../../components/Form/Input'
+import { InputForm } from '../../components/Form/InputForm'
 import { TransactionTypeButton } from '../../components/Form/TransactionTypeButton'
 
 import { closeKeyboard } from '../../utils/functions'
@@ -19,6 +23,22 @@ import {
     TransactionTypes
 } from './style'
 
+const schema = yup.object().shape({
+    name: yup
+        .string()
+        .required('Nome é obrigatório'),
+    amount: yup
+        .number()
+        .typeError('Informe um valor numérico')
+        .positive('O valor não pode ser negativo')
+        .required('O valor é obrigatório')
+})
+
+interface FormData {
+    name: string;
+    amount: string;
+}
+
 export const Register = () => {
     const [transactionTypeSelected, setTransactionTypeSelected] = useState('');
     const [categoryModalOpen, setCategoryModalOpen] = useState(false);
@@ -26,6 +46,17 @@ export const Register = () => {
         key: 'category',
         name: 'Categoria',
     });
+
+    const { 
+        control, 
+        handleSubmit,
+        formState: { errors } 
+    } = useForm<FormData>({
+        resolver: yupResolver(schema)
+    });
+
+    const formControll = control as unknown as Control<FieldValues, any>
+
 
     const handleTransactionTypeSelect = (type: 'up' | 'down') => {
 
@@ -46,6 +77,24 @@ export const Register = () => {
         setCategoryModalOpen(true);
     }
 
+    const handleRegister: SubmitHandler<FormData> = (form) => {
+
+        if (!transactionTypeSelected) {
+            return Alert.alert('Selecione o tipo da transação');
+        }
+
+        if (category.key === 'category') {
+            return Alert.alert('Selecione a categoria');
+        } 
+
+        const data = {
+            name: form.name,
+            amount: form.amount,
+            transactionType: transactionTypeSelected,
+            category: category.key,
+        }
+    }
+
     return (
         <TouchableWithoutFeedback onPress={closeKeyboard} >
             <Container>
@@ -55,15 +104,23 @@ export const Register = () => {
 
                 <Form>
                     <Fields>
-                        <Input 
+                        <InputForm 
+                            control={formControll}
+                            name='name'
                             placeholder='Nome'
-                            placeholderTextColor={'#969CB2'} 
+                            placeholderTextColor={'#969CB2'}
+                            autoCapitalize='words'
+                            autoCorrect={false} 
+                            error={errors.name && errors?.name.message}
                         />
 
-                        <Input 
+                        <InputForm
+                            control={formControll}
+                            name='amount'
                             placeholder='Preço'
                             placeholderTextColor={'#969CB2'} 
-                            
+                            keyboardType='numeric'
+                            error={errors.amount && errors?.amount.message}
                         />
                         
                         <TransactionTypes>
@@ -89,7 +146,10 @@ export const Register = () => {
                         />
                     </Fields>
 
-                    <Button title='Enviar' />
+                    <Button 
+                        title='Enviar' 
+                        onPress={handleSubmit(handleRegister)}
+                    />
                 </Form>
 
                 <Modal 
