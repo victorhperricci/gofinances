@@ -1,6 +1,8 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
+import { NavigationContainer } from '@react-navigation/native';
 import AppLoading from 'expo-app-loading';
+
 
 import {
   useFonts,
@@ -25,8 +27,10 @@ export default function App() {
   }
 
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <AppRoutes />
-    </ThemeProvider>
+    <NavigationContainer>
+      <ThemeProvider theme={defaultTheme}>
+        <AppRoutes />
+      </ThemeProvider>
+    </NavigationContainer>
   );
 }
